@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Pramuka - Portal Berita & Informasi Pramuka Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pramuka: {
+                            coklat: '#4A2511',
+                            coklatmuda: '#8C5A3C',
+                            kuning: '#F4B41A',
+                            kuningterang: '#FFD166',
+                            merah: '#D62828',
+                            bg: '#F8F5F0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #8C5A3C;
+            border-radius: 4px;
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-pramuka-bg font-sans text-gray-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- TOP BAR SOSMED & AKSES -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="bg-pramuka-coklat text-white text-xs py-2 px-4 sm:px-8 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <span class="hidden md:inline-block"><i class="far me-1 fa-clock"></i> <span id="current-date">Rabu, 7 Oktober 2026</span></span>
+                <span class="inline-block"><i class="fas me-1 fa-bullhorn text-pramuka-kuning"></i> Salam Pramuka! Praja Muda Karana</span>
+            </div>
+            <div class="flex items-center space-x-3" id="top-sosmed-container">
+                <!-- Social media icons injected dynamically -->
+            </div>
+        </div>
+
+        <!-- MAIN NAVBAR -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- LOGO & BRAND -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                    <img id="site-logo" src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=100&q=80" alt="Logo Pramuka" class="h-12 w-12 object-cover rounded-full border-2 border-pramuka-kuning shadow">
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-extrabold text-pramuka-coklat tracking-tight flex items-center">
+                            JURNAL PRAMUKA
+                        </h1>
+                        <p class="text-xs text-gray-500 font-medium tracking-wide">Portal Berita & Edukasi Pramuka Indonesia</p>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION LINKS -->
+                <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold text-gray-700">
+                    <button onclick="showSection('home')" class="hover:text-pramuka-coklat transition py-1">Beranda</button>
+                    <button onclick="filterCategory('Berita')" class="hover:text-pramuka-coklat transition py-1">Berita Pramuka</button>
+                    <button onclick="filterCategory('Artikel')" class="hover:text-pramuka-coklat transition py-1">Artikel & Edukasi</button>
+                    <button onclick="filterCategory('Event')" class="hover:text-pramuka-coklat transition py-1">Info Event</button>
+                    <button onclick="filterCategory('Pengumuman')" class="hover:text-pramuka-coklat transition py-1">Pengumuman</button>
+                </div>
+
+                <!-- ACTIONS BUTTON (LOGIN / PANEL) -->
+                <div class="flex items-center space-x-3" id="nav-user-action">
+                    <!-- Dynamic Login/Register/Panel Buttons -->
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO BANNER SECTION -->
+        <section id="hero-banner-section" class="relative bg-pramuka-coklat text-white py-12 px-4 sm:px-8 mb-8 overflow-hidden shadow-inner">
+            <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" id="hero-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1200&q=80');"></div>
+            <div class="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="max-w-2xl">
+                    <span class="bg-pramuka-kuning text-pramuka-coklat font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider mb-3 inline-block shadow">Informasi Terkini</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight mb-3 text-white drop-shadow-md" id="hero-title">Mengabdi Tanpa Batas, Membangun Karakter Bangsa</h2>
+                    <p class="text-sm sm:text-base text-amber-100 mb-6 leading-relaxed" id="hero-desc">Sajikan berita terupdate seputar kegiatan kepramukaan Penggalang, Penegak, Pandega hingga Pembina di seluruh pelosok Nusantara.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="scrollToNews()" class="bg-pramuka-kuning hover:bg-pramuka-kuningterang text-pramuka-coklat font-bold px-6 py-2.5 rounded-lg text-sm shadow-md transition transform hover:-translate-y-0.5">Baca Berita Terbaru</button>
+                        <button onclick="openRegisterModal()" class="bg-white/20 hover:bg-white/30 text-white font-semibold px-5 py-2.5 rounded-lg text-sm border border-white/40 transition backdrop-blur-sm">Gabung Jurnalis Pramuka</button>
+                    </div>
+                </div>
+                <div class="w-full md:w-auto flex justify-center">
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 shadow-2xl text-center max-w-xs">
+                        <i class="fas fa-campground text-5xl text-pramuka-kuning mb-3"></i>
+                        <h3 class="font-bold text-lg">Pramuka Peduli</h3>
+                        <p class="text-xs text-amber-100 mt-1">Siap sedia menolong sesama dan ikut serta membangun masyarakat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            
+            <!-- SECTION: PUBLIC BERANDA / NEWS VIEW -->
+            <div id="section-home" class="space-y-8">
+                <!-- SEARCH & FILTER BAR -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <!-- CATEGORY TABS -->
+                    <div class="flex items-center space-x-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 custom-scrollbar text-xs sm:text-sm font-semibold">
+                        <button onclick="filterCategory('Semua')" id="cat-Semua" class="cat-btn px-4 py-2 rounded-lg bg-pramuka-coklat text-white shadow-sm transition">Semua</button>
+                        <button onclick="filterCategory('Berita')" id="cat-Berita" class="cat-btn px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Berita</button>
+                        <button onclick="filterCategory('Artikel')" id="cat-Artikel" class="cat-btn px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Artikel</button>
+                        <button onclick="filterCategory('Event')" id="cat-Event" class="cat-btn px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Info Event</button>
+                        <button onclick="filterCategory('Pengumuman')" id="cat-Pengumuman" class="cat-btn px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Pengumuman</button>
+                    </div>
+                    <!-- SEARCH INPUT -->
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Cari berita..." class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- NEWS GRID -->
+                <div>
+                    <h3 class="text-xl font-bold text-pramuka-coklat mb-4 flex items-center">
+                        <i class="fas fa-newspaper me-2 text-pramuka-kuning"></i> <span id="news-section-title">Kabar & Informasi Pramuka</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-grid-container">
+                        <!-- News items injected dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: DETAIL BERITA -->
+            <div id="section-detail" class="hidden bg-white rounded-xl shadow-md p-6 sm:p-10 border border-gray-200">
+                <button onclick="showSection('home')" class="mb-6 inline-flex items-center text-sm font-semibold text-pramuka-coklat hover:text-pramuka-coklatmuda transition">
+                    <i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda
+                </button>
+                <article id="article-detail-content">
+                    <!-- Detail injected dynamically -->
+                </article>
+            </div>
+
+            <!-- SECTION: JURNALIS DASHBOARD -->
+            <div id="section-jurnalis" class="hidden bg-white rounded-xl shadow-md p-6 sm:p-8 border border-gray-200 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-pramuka-coklat flex items-center">
+                            <i class="fas fa-pen-nib me-2 text-pramuka-kuning"></i> Panel Jurnalis Pramuka
+                        </h2>
+                        <p class="text-xs text-gray-500">Kelola artikel & berita karya kepramukaan Anda di sini.</p>
+                    </div>
+                    <button onclick="openWriteNewsModal()" class="bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow flex items-center transition">
+                        <i class="fas fa-plus me-2"></i> Tulis Berita Baru
+                    </button>
+                </div>
+
+                <!-- TABLE MY ARTICLES -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 uppercase text-xs">
+                                <th class="p-3 rounded-l-lg">Gambar</th>
+                                <th class="p-3">Judul Berita</th>
+                                <th class="p-3">Kategori</th>
+                                <th class="p-3">Tanggal</th>
+                                <th class="p-3 text-center rounded-r-lg">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalist-articles-body" class="divide-y divide-gray-200">
+                            <!-- Dynamic Journalist Articles -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: SUPER ADMIN DASHBOARD -->
+            <div id="section-admin" class="hidden space-y-8">
+                <!-- ADMIN BANNER HEADER -->
+                <div class="bg-pramuka-coklat text-white p-6 rounded-xl shadow-md flex justify-between items-center">
+                    <div>
+                        <span class="bg-pramuka-kuning text-pramuka-coklat text-xs font-bold px-2.5 py-1 rounded">Super Admin Control</span>
+                        <h2 class="text-2xl font-extrabold mt-1">Panel Pengaturan Portal Web</h2>
+                        <p class="text-xs text-amber-100 mt-1">Kelola logo, foto banner, link sosmed, serta moderasi artikel & jurnalis.</p>
+                    </div>
+                    <i class="fas fa-user-shield text-5xl text-pramuka-kuning opacity-80"></i>
+                </div>
+
+                <!-- GRID CONFIG & MANAGEMENT -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- COLUMN 1: WEB CONFIGURATION (LOGO, BANNER, SOSMED) -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+                        <h3 class="text-lg font-bold text-pramuka-coklat border-b pb-2 flex items-center">
+                            <i class="fas fa-cog me-2 text-pramuka-kuning"></i> Pengaturan Branding Web
+                        </h3>
+
+                        <!-- LOGO CONFIG -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 uppercase">Logo Portal Web</label>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img id="admin-preview-logo" src="" class="w-12 h-12 rounded-full object-cover border">
+                                <span class="text-xs text-gray-500">Preview logo aktif</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-xs mb-2">
+                                <label><input type="radio" name="logo-source-type" value="file" checked onclick="toggleLogoSource('file')"> Upload Perangkat</label>
+                                <label><input type="radio" name="logo-source-type" value="url" onclick="toggleLogoSource('url')"> Gunakan URL</label>
+                            </div>
+                            <div id="logo-file-box">
+                                <input type="file" id="admin-logo-file" accept="image/*" onchange="handleFileSelect(event, 'logo')" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-pramuka-coklat file:text-white hover:file:bg-pramuka-coklatmuda">
+                            </div>
+                            <div id="logo-url-box" class="hidden">
+                                <input type="text" id="admin-logo-url" placeholder="https://..." class="w-full p-2 border rounded-lg text-xs">
+                            </div>
+                        </div>
+
+                        <!-- BANNER HERO CONFIG -->
+                        <div class="space-y-2 pt-2 border-t">
+                            <label class="block text-xs font-bold text-gray-700 uppercase">Foto Sampul Utama / Banner Hero</label>
+                            <div class="flex items-center space-x-3 text-xs mb-2">
+                                <label><input type="radio" name="banner-source-type" value="file" checked onclick="toggleBannerSource('file')"> Upload Perangkat</label>
+                                <label><input type="radio" name="banner-source-type" value="url" onclick="toggleBannerSource('url')"> Gunakan URL</label>
+                            </div>
+                            <div id="banner-file-box">
+                                <input type="file" id="admin-banner-file" accept="image/*" onchange="handleFileSelect(event, 'banner')" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-pramuka-coklat file:text-white hover:file:bg-pramuka-coklatmuda">
+                            </div>
+                            <div id="banner-url-box" class="hidden">
+                                <input type="text" id="admin-banner-url" placeholder="https://..." class="w-full p-2 border rounded-lg text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mt-2">Judul Banner Hero</label>
+                                <input type="text" id="admin-banner-title" class="w-full p-2 border rounded-lg text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600">Deskripsi Singkat Banner</label>
+                                <textarea id="admin-banner-desc" rows="2" class="w-full p-2 border rounded-lg text-xs"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- SOSMED CONFIG -->
+                        <div class="space-y-2 pt-2 border-t">
+                            <label class="block text-xs font-bold text-gray-700 uppercase">Tautan Media Sosial</label>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center"><i class="fab fa-whatsapp text-green-500 w-6"></i><input type="text" id="admin-sosmed-wa" placeholder="No WhatsApp (contoh: 628123456789)" class="w-full p-1.5 border rounded"></div>
+                                <div class="flex items-center"><i class="fab fa-facebook text-blue-600 w-6"></i><input type="text" id="admin-sosmed-fb" placeholder="URL Facebook" class="w-full p-1.5 border rounded"></div>
+                                <div class="flex items-center"><i class="fab fa-instagram text-pink-600 w-6"></i><input type="text" id="admin-sosmed-ig" placeholder="URL Instagram" class="w-full p-1.5 border rounded"></div>
+                                <div class="flex items-center"><i class="fab fa-youtube text-red-600 w-6"></i><input type="text" id="admin-sosmed-yt" placeholder="URL YouTube" class="w-full p-1.5 border rounded"></div>
+                                <div class="flex items-center"><i class="fab fa-tiktok text-black w-6"></i><input type="text" id="admin-sosmed-tt" placeholder="URL TikTok" class="w-full p-1.5 border rounded"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="saveAdminSettings()" class="w-full bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white font-bold py-2.5 rounded-lg text-xs uppercase tracking-wider transition shadow">
+                            <i class="fas fa-save me-1"></i> Simpan Pengaturan Web
+                        </button>
+                    </div>
+
+                    <!-- COLUMN 2 & 3: ALL ARTICLES & REPORTERS MANAGEMENT -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- MANAGEMENT ARTICLES ALL -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-pramuka-coklat mb-4 border-b pb-2 flex items-center">
+                                <i class="fas fa-newspaper me-2 text-pramuka-kuning"></i> Kelola Semua Berita & Artikel
+                            </h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700 uppercase">
+                                            <th class="p-2.5 rounded-l">Judul</th>
+                                            <th class="p-2.5">Penulis</th>
+                                            <th class="p-2.5">Kategori</th>
+                                            <th class="p-2.5 text-center rounded-r">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-articles-body" class="divide-y divide-gray-200">
+                                        <!-- Dynamic Admin Articles List -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- MANAGEMENT JOURNALIST USERS -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-pramuka-coklat mb-4 border-b pb-2 flex items-center">
+                                <i class="fas fa-users-cog me-2 text-pramuka-kuning"></i> Daftar Jurnalis Terdaftar
+                            </h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700 uppercase">
+                                            <th class="p-2.5 rounded-l">Nama Jurnalis</th>
+                                            <th class="p-2.5">Kwartir / Pangkalan</th>
+                                            <th class="p-2.5">Email</th>
+                                            <th class="p-2.5">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-journalists-body" class="divide-y divide-gray-200">
+                                        <!-- Dynamic Journalists List -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-pramuka-coklat text-amber-100 pt-10 pb-6 border-t-4 border-pramuka-kuning">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs sm:text-sm">
+            <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                    <img id="footer-logo" src="" class="w-8 h-8 rounded-full border border-pramuka-kuning object-cover">
+                    <span class="font-bold text-lg text-white">Jurnal Pramuka</span>
+                </div>
+                <p class="text-amber-200/80 leading-relaxed">Wadah publikasi kreatifitas, berita, serta informasi kegiatan Gerakan Pramuka se-Indonesia.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3 border-b border-amber-800 pb-1">Kategori</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="filterCategory('Berita'); return false;" class="hover:text-pramuka-kuning transition">Berita Pramuka</a></li>
+                    <li><a href="#" onclick="filterCategory('Artikel'); return false;" class="hover:text-pramuka-kuning transition">Artikel Edukasi</a></li>
+                    <li><a href="#" onclick="filterCategory('Event'); return false;" class="hover:text-pramuka-kuning transition">Informasi Event</a></li>
+                    <li><a href="#" onclick="filterCategory('Pengumuman'); return false;" class="hover:text-pramuka-kuning transition">Pengumuman Kwarnas</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3 border-b border-amber-800 pb-1">Kontak Redaksi</h4>
+                <p class="text-amber-200/80 mb-2"><i class="fas fa-map-marker-alt me-2 text-pramuka-kuning"></i> Gedung Pramuka Lantai 3, Jakarta Pusat</p>
+                <p class="text-amber-200/80 mb-2"><i class="fas fa-envelope me-2 text-pramuka-kuning"></i> redaksi@jurnalpramuka.or.id</p>
+                <p class="text-amber-200/80"><i class="fas fa-phone me-2 text-pramuka-kuning"></i> +62 812-3456-7890</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3 border-b border-amber-800 pb-1">Ikuti Kami</h4>
+                <div class="flex space-x-3 text-lg" id="footer-sosmed-container">
+                    <!-- Dynamic footer sosmed icons -->
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-amber-900/50 pt-4 text-center text-xs text-amber-300/60">
+            &copy; 2026 Jurnal Pramuka Indonesia. Hak Cipta Dilindungi. Setya Kudharmakan, Dharma Kubaktikan.
+        </div>
+    </footer>
+
+    <!-- MODAL 1: LOGIN -->
+    <div id="modal-login" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative transform transition-all">
+            <button onclick="closeModal('modal-login')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+            <div class="text-center mb-6">
+                <i class="fas fa-user-circle text-4xl text-pramuka-coklat mb-2"></i>
+                <h3 class="text-xl font-bold text-pramuka-coklat">Masuk Akun</h3>
+                <p class="text-xs text-gray-500">Masuk sebagai Jurnalis atau Super Admin</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Email / Username</label>
+                    <input type="text" id="login-email" required placeholder="email@domain.com" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Kata Sandi</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <div class="bg-amber-50 p-2.5 rounded-lg text-amber-800 text-[11px] leading-tight border border-amber-200">
+                    <i class="fas fa-info-circle me-1"></i> Demo Login Admin: <br>
+                    <strong>Email:</strong> admin@pramuka.id | <strong>Password:</strong> admin123
+                </div>
+                <button type="submit" class="w-full bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white font-bold py-2.5 rounded-lg transition shadow">Masuk Sekarang</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REGISTER JOURNALIST -->
+    <div id="modal-register" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative transform transition-all max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal('modal-register')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+            <div class="text-center mb-6">
+                <i class="fas fa-id-card text-4xl text-pramuka-kuning mb-2"></i>
+                <h3 class="text-xl font-bold text-pramuka-coklat">Pendaftaran Jurnalis Pramuka</h3>
+                <p class="text-xs text-gray-500">Bergabunglah menjadi bagian dari pers kepramukaan</p>
+            </div>
+            <form onsubmit="handleRegister(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Nama Lengkap & Gelar Pramuka</label>
+                    <input type="text" id="reg-name" required placeholder="Kak Ahmad Dahlan, S.Pd." class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Pangkalan / Kwartir (Kwarran/Kwarcab/Kwarda)</label>
+                    <input type="text" id="reg-pangkalan" required placeholder="Kwarcab Kota Bandung" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Email Aktif</label>
+                    <input type="email" id="reg-email" required placeholder="jurnalis@pramuka.or.id" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Kata Sandi</label>
+                    <input type="password" id="reg-password" required placeholder="••••••••" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+                <button type="submit" class="w-full bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white font-bold py-2.5 rounded-lg transition shadow">Daftar Jurnalis</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: TULIS BERITA / EDITOR (WITH DEVICE FILE & URL UPLOAD) -->
+    <div id="modal-news-editor" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative transform transition-all max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal('modal-news-editor')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+            <div class="border-b pb-3 mb-4">
+                <h3 class="text-xl font-bold text-pramuka-coklat flex items-center" id="modal-editor-title">
+                    <i class="fas fa-edit me-2 text-pramuka-kuning"></i> Tulis Berita Baru
+                </h3>
+            </div>
+            <form onsubmit="handleSaveArticle(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="edit-article-id">
+                
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Judul Berita / Artikel</label>
+                    <input type="text" id="article-title" required placeholder="Contoh: Pembukaan Jamnas Tahun 2026 Berlangsung Meriah" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Kategori</label>
+                        <select id="article-category" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat bg-white">
+                            <option value="Berita">Berita Pramuka</option>
+                            <option value="Artikel">Artikel & Edukasi</option>
+                            <option value="Event">Info Event</option>
+                            <option value="Pengumuman">Pengumuman</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Nama Penulis / Jurnalis</label>
+                        <input type="text" id="article-author" readonly class="w-full p-2.5 border border-gray-200 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed">
+                    </div>
+                </div>
+
+                <!-- FEATURED IMAGE SOURCE TOGGLE (FILE UPLOAD VS URL) -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <label class="block font-bold text-pramuka-coklat flex items-center">
+                        <i class="fas fa-image me-2 text-pramuka-kuning"></i> Foto Utama Artikel
+                    </label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="article-img-source" value="file" checked onclick="toggleArticleImgSource('file')" class="text-pramuka-coklat focus:ring-pramuka-coklat">
+                            <span class="ms-2 font-semibold text-gray-700">Upload dari Perangkat</span>
+                        </label>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="article-img-source" value="url" onclick="toggleArticleImgSource('url')" class="text-pramuka-coklat focus:ring-pramuka-coklat">
+                            <span class="ms-2 font-semibold text-gray-700">Gunakan URL Gambar</span>
+                        </label>
+                    </div>
+
+                    <!-- INPUT FILE PERANGKAT -->
+                    <div id="article-img-file-box" class="space-y-2">
+                        <input type="file" id="article-img-file" accept="image/*" onchange="handleFileSelect(event, 'article')" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-pramuka-coklat file:text-white hover:file:bg-pramuka-coklatmuda transition">
+                        <p class="text-[10px] text-gray-400">Pilih foto dari Galeri HP atau Komputer Anda (PNG, JPG, WEBP).</p>
+                    </div>
+
+                    <!-- INPUT URL GAMBAR -->
+                    <div id="article-img-url-box" class="space-y-1 hidden">
+                        <input type="text" id="article-img-url" placeholder="https://images.unsplash.com/photo-..." class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat">
+                    </div>
+
+                    <!-- PREVIEW IMAGE -->
+                    <div id="article-img-preview-wrapper" class="hidden mt-2">
+                        <span class="block text-[11px] font-semibold text-gray-500 mb-1">Pratinjau Foto:</span>
+                        <img id="article-img-preview" src="" class="h-32 w-full object-cover rounded-lg border">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Isi Artikel / Berita</label>
+                    <textarea id="article-content" rows="7" required placeholder="Tuliskan berita lengkap di sini..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pramuka-coklat leading-relaxed"></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-3 border-t">
+                    <button type="button" onclick="closeModal('modal-news-editor')" class="px-4 py-2 rounded-lg border text-gray-600 font-semibold hover:bg-gray-100 transition">Batal</button>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white font-bold transition shadow">Terbitkan Berita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST BOX -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 bg-pramuka-coklat text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i id="toast-icon" class="fas fa-check-circle text-pramuka-kuning text-xl"></i>
+        <span id="toast-message" class="text-xs font-semibold">Notifikasi berhasil</span>
+    </div>
+
+    <script>
+        // INITIAL DATA SETS
+        const DEFAULT_CONFIG = {
+            logoUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=100&q=80',
+            bannerUrl: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1200&q=80',
+            bannerTitle: 'Mengabdi Tanpa Batas, Membangun Karakter Bangsa',
+            bannerDesc: 'Sajikan berita terupdate seputar kegiatan kepramukaan Penggalang, Penegak, Pandega hingga Pembina di seluruh pelosok Nusantara.',
+            sosmed: {
+                wa: '6281234567890',
+                fb: 'https://facebook.com/pramukaindonesia',
+                ig: 'https://instagram.com/gerakanpramuka',
+                yt: 'https://youtube.com/@gerakanpramuka',
+                tt: 'https://tiktok.com/@gerakanpramuka'
+            }
+        };
+
+        const DEFAULT_ARTICLES = [
+            {
+                id: 'art-1',
+                title: 'Jambore Nasional 2026 Resmi Dibuka dengan Atraksi Kolosal Kebudayaan',
+                category: 'Berita',
+                author: 'Kak Budi Santoso',
+                date: '05 Oktober 2026',
+                imageUrl: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=600&q=80',
+                content: 'Cibubur, Jurnal Pramuka - Ribuan anggota Pramuka Penggalang dari seluruh Indonesia memadati Lapangan Utama Bupiper Cibubur dalam upacara pembukaan Jambore Nasional 2026. Acara dibuka dengan parade tarian adat nusantara dan aksi repling spanduk raksasa oleh penegak bantara.\n\nKetua Kwartir Nasional menekankan pentingnya persatuan dan pemanfaatan teknologi digital secara bijak bagi generasi muda Pramuka saat ini.'
+            },
+            {
+                id: 'art-2',
+                title: 'Tips Lolos Ujian Kecakapan Khusus (TKK) Kompas & Peta',
+                category: 'Artikel',
+                author: 'Kak Siti Rahma',
+                date: '03 Oktober 2026',
+                imageUrl: 'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&q=80',
+                content: 'Mendapatkan Tanda Kecakapan Khusus (TKK) Kompas merupakan kebanggaan tersendiri bagi Pramuka Penggalang maupun Penegak. Berikut tips memahami azimuth dan back-azimuth serta cara membaca peta kontur darat dengan akurat.\n\nPastikan selalu melakukan kalibrasi kompas bidik sebelum memulai navigasi darat di hutan.'
+            },
+            {
+                id: 'art-3',
+                title: 'Pelatihan Pertolongan Pertama (P3K) Kebencanaan Angkatan 2026',
+                category: 'Event',
+                author: 'Kak Ahmad Ridwan',
+                date: '01 Oktober 2026',
+                imageUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80',
+                content: 'Kwarda Jawa Barat menggelar Diklat P3K Kebencanaan bagi anggota Pramuka Peduli. Kegiatan berlangsung selama tiga hari mencakup simulasi evakuasi medis, pembidaian, dan pertolongan darurat air.'
+            }
+        ];
+
+        const DEFAULT_JOURNALISTS = [
+            { name: 'Kak Budi Santoso', pangkalan: 'Kwarcab Jakarta Selatan', email: 'budi@pramuka.id', status: 'Aktif' },
+            { name: 'Kak Siti Rahma', pangkalan: 'Kwarcab Bandung', email: 'siti@pramuka.id', status: 'Aktif' },
+            { name: 'Kak Ahmad Ridwan', pangkalan: 'Kwarcab Bogor', email: 'ahmad@pramuka.id', status: 'Aktif' }
+        ];
+
+        // STATE APP
+        let appConfig = JSON.parse(localStorage.getItem('jp_config')) || DEFAULT_CONFIG;
+        let articles = JSON.parse(localStorage.getItem('jp_articles')) || DEFAULT_ARTICLES;
+        let journalists = JSON.parse(localStorage.getItem('jp_journalists')) || DEFAULT_JOURNALISTS;
+        let currentUser = JSON.parse(localStorage.getItem('jp_user')) || null; // null or { name, email, role: 'admin'|'journalist', pangkalan }
+        
+        let tempBase64Article = '';
+        let tempBase64Logo = '';
+        let tempBase64Banner = '';
+
+        window.onload = function() {
+            renderBranding();
+            renderTopNav();
+            renderNewsGrid(articles);
+            renderAdminPanelData();
+            renderJournalistPanelData();
+        };
+
+        // SAVE STATE TO LOCALSTORAGE
+        function saveData() {
+            localStorage.setItem('jp_config', JSON.stringify(appConfig));
+            localStorage.setItem('jp_articles', JSON.stringify(articles));
+            localStorage.setItem('jp_journalists', JSON.stringify(journalists));
+            localStorage.setItem('jp_user', JSON.stringify(currentUser));
+        }
+
+        // RENDER BRANDING & CONFIG
+        function renderBranding() {
+            document.getElementById('site-logo').src = appConfig.logoUrl;
+            document.getElementById('footer-logo').src = appConfig.logoUrl;
+            document.getElementById('hero-banner-bg').style.backgroundImage = `url('${appConfig.bannerUrl}')`;
+            document.getElementById('hero-title').innerText = appConfig.bannerTitle;
+            document.getElementById('hero-desc').innerText = appConfig.bannerDesc;
+
+            // Render Social Media Icons Top & Footer
+            const sosmed = appConfig.sosmed;
+            let sosmedHtml = '';
+            if(sosmed.wa) sosmedHtml += `<a href="https://wa.me/${sosmed.wa}" target="_blank" class="hover:text-pramuka-kuning"><i class="fab fa-whatsapp"></i></a>`;
+            if(sosmed.fb) sosmedHtml += `<a href="${sosmed.fb}" target="_blank" class="hover:text-pramuka-kuning"><i class="fab fa-facebook"></i></a>`;
+            if(sosmed.ig) sosmedHtml += `<a href="${sosmed.ig}" target="_blank" class="hover:text-pramuka-kuning"><i class="fab fa-instagram"></i></a>`;
+            if(sosmed.yt) sosmedHtml += `<a href="${sosmed.yt}" target="_blank" class="hover:text-pramuka-kuning"><i class="fab fa-youtube"></i></a>`;
+            if(sosmed.tt) sosmedHtml += `<a href="${sosmed.tt}" target="_blank" class="hover:text-pramuka-kuning"><i class="fab fa-tiktok"></i></a>`;
+
+            document.getElementById('top-sosmed-container').innerHTML = sosmedHtml;
+            document.getElementById('footer-sosmed-container').innerHTML = sosmedHtml;
+        }
+
+        // RENDER TOP NAVIGATION ACTIONS
+        function renderTopNav() {
+            const container = document.getElementById('nav-user-action');
+            if(!currentUser) {
+                container.innerHTML = `
+                    <button onclick="openModal('modal-login')" class="text-xs sm:text-sm font-semibold text-pramuka-coklat hover:text-pramuka-coklatmuda px-3 py-1.5 rounded-lg border border-pramuka-coklat/30 transition">Masuk</button>
+                    <button onclick="openModal('modal-register')" class="text-xs sm:text-sm font-bold bg-pramuka-coklat hover:bg-pramuka-coklatmuda text-white px-4 py-2 rounded-lg shadow transition">Daftar Jurnalis</button>
+                `;
+            } else {
+                let badge = currentUser.role === 'admin' ? 'Super Admin' : 'Jurnalis';
+                container.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <span onclick="${currentUser.role === 'admin' ? "showSection('admin')" : "showSection('jurnalis')"}" class="text-xs font-bold bg-amber-100 text-pramuka-coklat px-3 py-1.5 rounded-full border border-amber-300 cursor-pointer hover:bg-amber-200 flex items-center">
+                            <i class="fas ${currentUser.role === 'admin' ? 'fa-user-shield' : 'fa-pen-nib'} me-1.5"></i> ${currentUser.name} (${badge})
+                        </span>
+                        <button onclick="handleLogout()" title="Keluar" class="text-xs text-red-600 hover:text-red-800 p-2"><i class="fas fa-sign-out-alt text-base"></i></button>
+                    </div>
+                `;
+            }
+        }
+
+        function showSection(sectionId) {
+            document.getElementById('section-home').classList.add('hidden');
+            document.getElementById('section-detail').classList.add('hidden');
+            document.getElementById('section-jurnalis').classList.add('hidden');
+            document.getElementById('section-admin').classList.add('hidden');
+
+            document.getElementById('hero-banner-section').style.display = (sectionId === 'home') ? 'block' : 'none';
+
+            if(sectionId === 'home') document.getElementById('section-home').classList.remove('hidden');
+            if(sectionId === 'detail') document.getElementById('section-detail').classList.remove('hidden');
+            if(sectionId === 'jurnalis') {
+                document.getElementById('section-jurnalis').classList.remove('hidden');
+                renderJournalistPanelData();
+            }
+            if(sectionId === 'admin') {
+                document.getElementById('section-admin').classList.remove('hidden');
+                populateAdminConfigForm();
+                renderAdminPanelData();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToNews() {
+            showSection('home');
+            document.getElementById('search-input').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // RENDER NEWS GRID
+        function renderNewsGrid(dataList) {
+            const container = document.getElementById('news-grid-container');
+            if(dataList.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 font-medium">Belum ada berita atau artikel yang ditemukan.</div>`;
+                return;
+            }
+
+            container.innerHTML = dataList.map(art => `
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-200 overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-gray-100">
+                            <img src="${art.imageUrl}" alt="${art.title}" onerror="this.src='https://placehold.co/600x400/4A2511/FFFFFF?text=Jurnal+Pramuka'" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-pramuka-coklat text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow">${art.category}</span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center text-xs text-gray-400 mb-2 space-x-3">
+                                <span><i class="far fa-user me-1"></i> ${art.author}</span>
+                                <span><i class="far fa-calendar-alt me-1"></i> ${art.date}</span>
+                            </div>
+                            <h4 onclick="readDetail('${art.id}')" class="font-bold text-gray-800 text-base leading-snug mb-2 hover:text-pramuka-coklat cursor-pointer transition line-clamp-2">${art.title}</h4>
+                            <p class="text-xs text-gray-600 line-clamp-3 leading-relaxed">${art.content}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-2 border-t border-gray-100 flex justify-between items-center">
+                        <button onclick="readDetail('${art.id}')" class="text-xs font-bold text-pramuka-coklat hover:text-pramuka-coklatmuda flex items-center">
+                            Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // READ ARTICLE DETAIL
+        function readDetail(id) {
+            const article = articles.find(a => a.id === id);
+            if(!article) return;
+
+            const detailContainer = document.getElementById('article-detail-content');
+            detailContainer.innerHTML = `
+                <div class="mb-4">
+                    <span class="bg-pramuka-kuning text-pramuka-coklat text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${article.category}</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-gray-900 leading-tight mb-4">${article.title}</h1>
+                <div class="flex items-center space-x-4 text-xs text-gray-500 mb-6 pb-4 border-b">
+                    <span class="font-medium text-pramuka-coklat"><i class="fas fa-user-edit me-1"></i> ${article.author}</span>
+                    <span><i class="far fa-calendar-alt me-1"></i> ${article.date}</span>
+                </div>
+                <div class="mb-8 rounded-xl overflow-hidden shadow-lg max-h-[450px]">
+                    <img src="${article.imageUrl}" onerror="this.src='https://placehold.co/800x400/4A2511/FFFFFF?text=Jurnal+Pramuka'" class="w-full h-full object-cover">
+                </div>
+                <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4 text-sm sm:text-base whitespace-pre-line">
+                    ${article.content}
+                </div>
+            `;
+            showSection('detail');
+        }
+
+        // CATEGORY FILTER & SEARCH
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-pramuka-coklat', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            const activeBtn = document.getElementById('cat-' + cat);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-gray-100', 'text-gray-700');
+                activeBtn.classList.add('bg-pramuka-coklat', 'text-white');
+            }
+
+            document.getElementById('news-section-title').innerText = cat === 'Semua' ? 'Kabar & Informasi Pramuka' : 'Kategori: ' + cat;
+
+            if(cat === 'Semua') {
+                renderNewsGrid(articles);
+            } else {
+                const filtered = articles.filter(a => a.category.toLowerCase() === cat.toLowerCase());
+                renderNewsGrid(filtered);
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = articles.filter(a => a.title.toLowerCase().includes(query) || a.content.toLowerCase().includes(query));
+            renderNewsGrid(filtered);
+        }
+
+        // FILE SELECTOR TO BASE64 CONVERTER
+        function handleFileSelect(event, targetType) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Result = e.target.result;
+                if(targetType === 'article') {
+                    tempBase64Article = base64Result;
+                    document.getElementById('article-img-preview').src = base64Result;
+                    document.getElementById('article-img-preview-wrapper').classList.remove('hidden');
+                } else if(targetType === 'logo') {
+                    tempBase64Logo = base64Result;
+                    document.getElementById('admin-preview-logo').src = base64Result;
+                } else if(targetType === 'banner') {
+                    tempBase64Banner = base64Result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // TOGGLE SOURCE INPUT ARTICLE
+        function toggleArticleImgSource(type) {
+            if(type === 'file') {
+                document.getElementById('article-img-file-box').classList.remove('hidden');
+                document.getElementById('article-img-url-box').classList.add('hidden');
+            } else {
+                document.getElementById('article-img-file-box').classList.add('hidden');
+                document.getElementById('article-img-url-box').classList.remove('hidden');
+            }
+        }
+
+        // TOGGLE SOURCE INPUT ADMIN LOGO & BANNER
+        function toggleLogoSource(type) {
+            if(type === 'file') {
+                document.getElementById('logo-file-box').classList.remove('hidden');
+                document.getElementById('logo-url-box').classList.add('hidden');
+            } else {
+                document.getElementById('logo-file-box').classList.add('hidden');
+                document.getElementById('logo-url-box').classList.remove('hidden');
+            }
+        }
+
+        function toggleBannerSource(type) {
+            if(type === 'file') {
+                document.getElementById('banner-file-box').classList.remove('hidden');
+                document.getElementById('banner-url-box').classList.add('hidden');
+            } else {
+                document.getElementById('banner-file-box').classList.add('hidden');
+                document.getElementById('banner-url-box').classList.remove('hidden');
+            }
+        }
+
+        // OPEN WRITE NEWS MODAL
+        function openWriteNewsModal(articleId = null) {
+            if(!currentUser) {
+                showToast('Silakan masuk terlebih dahulu!', 'error');
+                openModal('modal-login');
+                return;
+            }
+
+            tempBase64Article = '';
+            document.getElementById('edit-article-id').value = '';
+            document.getElementById('article-title').value = '';
+            document.getElementById('article-content').value = '';
+            document.getElementById('article-img-file').value = '';
+            document.getElementById('article-img-url').value = '';
+            document.getElementById('article-img-preview-wrapper').classList.add('hidden');
+            document.getElementById('article-author').value = currentUser.name;
+
+            if(articleId) {
+                const art = articles.find(a => a.id === articleId);
+                if(art) {
+                    document.getElementById('modal-editor-title').innerText = 'Edit Berita';
+                    document.getElementById('edit-article-id').value = art.id;
+                    document.getElementById('article-title').value = art.title;
+                    document.getElementById('article-category').value = art.category;
+                    document.getElementById('article-content').value = art.content;
+                    document.getElementById('article-img-url').value = art.imageUrl;
+                    document.getElementById('article-img-preview').src = art.imageUrl;
+                    document.getElementById('article-img-preview-wrapper').classList.remove('hidden');
+                }
+            } else {
+                document.getElementById('modal-editor-title').innerText = 'Tulis Berita Baru';
+            }
+
+            openModal('modal-news-editor');
+        }
+
+        // SAVE / SUBMIT ARTICLE
+        function handleSaveArticle(e) {
+            e.preventDefault();
+            const editId = document.getElementById('edit-article-id').value;
+            const title = document.getElementById('article-title').value;
+            const category = document.getElementById('article-category').value;
+            const content = document.getElementById('article-content').value;
+            const sourceType = document.querySelector('input[name="article-img-source"]:checked').value;
+            
+            let imageUrl = '';
+            if(sourceType === 'file' && tempBase64Article) {
+                imageUrl = tempBase64Article;
+            } else {
+                imageUrl = document.getElementById('article-img-url').value || 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&q=80';
+            }
+
+            if(editId) {
+                // Update
+                const index = articles.findIndex(a => a.id === editId);
+                if(index !== -1) {
+                    articles[index].title = title;
+                    articles[index].category = category;
+                    articles[index].content = content;
+                    if(imageUrl) articles[index].imageUrl = imageUrl;
+                }
+                showToast('Berita berhasil diperbarui!');
+            } else {
+                // Create New
+                const newArticle = {
+                    id: 'art-' + Date.now(),
+                    title: title,
+                    category: category,
+                    author: currentUser.name,
+                    date: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'Long', year: 'numeric' }),
+                    imageUrl: imageUrl,
+                    content: content
+                };
+                articles.unshift(newArticle);
+                showToast('Berita baru berhasil diterbitkan!');
+            }
+
+            saveData();
+            closeModal('modal-news-editor');
+            renderNewsGrid(articles);
+            renderJournalistPanelData();
+            renderAdminPanelData();
+        }
+
+        // DELETE ARTICLE
+        function deleteArticle(id) {
+            if(confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+                articles = articles.filter(a => a.id !== id);
+                saveData();
+                renderNewsGrid(articles);
+                renderJournalistPanelData();
+                renderAdminPanelData();
+                showToast('Berita telah dihapus.');
+            }
+        }
+
+        // RENDER JOURNALIST PANEL DATA
+        function renderJournalistPanelData() {
+            if(!currentUser) return;
+            const myArticles = articles.filter(a => a.author === currentUser.name);
+            const tbody = document.getElementById('journalist-articles-body');
+            
+            if(myArticles.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-gray-400">Anda belum menulis berita apapun.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = myArticles.map(art => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3"><img src="${art.imageUrl}" class="w-12 h-10 object-cover rounded"></td>
+                    <td class="p-3 font-semibold text-gray-800">${art.title}</td>
+                    <td class="p-3"><span class="bg-amber-100 text-pramuka-coklat px-2 py-0.5 rounded text-[11px] font-bold">${art.category}</span></td>
+                    <td class="p-3 text-gray-500 text-xs">${art.date}</td>
+                    <td class="p-3 text-center space-x-2">
+                        <button onclick="openWriteNewsModal('${art.id}')" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteArticle('${art.id}')" class="text-red-600 hover:text-red-800"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // POPULATE ADMIN CONFIG FORM
+        function populateAdminConfigForm() {
+            document.getElementById('admin-preview-logo').src = appConfig.logoUrl;
+            document.getElementById('admin-logo-url').value = appConfig.logoUrl;
+            document.getElementById('admin-banner-url').value = appConfig.bannerUrl;
+            document.getElementById('admin-banner-title').value = appConfig.bannerTitle;
+            document.getElementById('admin-banner-desc').value = appConfig.bannerDesc;
+
+            document.getElementById('admin-sosmed-wa').value = appConfig.sosmed.wa || '';
+            document.getElementById('admin-sosmed-fb').value = appConfig.sosmed.fb || '';
+            document.getElementById('admin-sosmed-ig').value = appConfig.sosmed.ig || '';
+            document.getElementById('admin-sosmed-yt').value = appConfig.sosmed.yt || '';
+            document.getElementById('admin-sosmed-tt').value = appConfig.sosmed.tt || '';
+        }
+
+        // SAVE ADMIN CONFIG
+        function saveAdminSettings() {
+            const logoSource = document.querySelector('input[name="logo-source-type"]:checked').value;
+            if(logoSource === 'file' && tempBase64Logo) {
+                appConfig.logoUrl = tempBase64Logo;
+            } else if(document.getElementById('admin-logo-url').value) {
+                appConfig.logoUrl = document.getElementById('admin-logo-url').value;
+            }
+
+            const bannerSource = document.querySelector('input[name="banner-source-type"]:checked').value;
+            if(bannerSource === 'file' && tempBase64Banner) {
+                appConfig.bannerUrl = tempBase64Banner;
+            } else if(document.getElementById('admin-banner-url').value) {
+                appConfig.bannerUrl = document.getElementById('admin-banner-url').value;
+            }
+
+            appConfig.bannerTitle = document.getElementById('admin-banner-title').value;
+            appConfig.bannerDesc = document.getElementById('admin-banner-desc').value;
+
+            appConfig.sosmed.wa = document.getElementById('admin-sosmed-wa').value;
+            appConfig.sosmed.fb = document.getElementById('admin-sosmed-fb').value;
+            appConfig.sosmed.ig = document.getElementById('admin-sosmed-ig').value;
+            appConfig.sosmed.yt = document.getElementById('admin-sosmed-yt').value;
+            appConfig.sosmed.tt = document.getElementById('admin-sosmed-tt').value;
+
+            saveData();
+            renderBranding();
+            showToast('Pengaturan portal web berhasil disimpan!');
+        }
+
+        // RENDER ADMIN PANEL TABLES
+        function renderAdminPanelData() {
+            // Render All Articles Table
+            const artBody = document.getElementById('admin-articles-body');
+            artBody.innerHTML = articles.map(art => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-medium text-gray-800 line-clamp-1">${art.title}</td>
+                    <td class="p-2.5 text-gray-600">${art.author}</td>
+                    <td class="p-2.5"><span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${art.category}</span></td>
+                    <td class="p-2.5 text-center space-x-2">
+                        <button onclick="openWriteNewsModal('${art.id}')" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteArticle('${art.id}')" class="text-red-600 hover:text-red-800"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Journalists Table
+            const jrnBody = document.getElementById('admin-journalists-body');
+            jrnBody.innerHTML = journalists.map(j => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-bold text-gray-800">${j.name}</td>
+                    <td class="p-2.5 text-gray-600">${j.pangkalan}</td>
+                    <td class="p-2.5 text-gray-500">${j.email}</td>
+                    <td class="p-2.5"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-semibold">${j.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // LOGIN HANDLER
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            if(email === 'admin@pramuka.id' && pass === 'admin123') {
+                currentUser = { name: 'Kak Admin Pusat', email: email, role: 'admin', pangkalan: 'Kwarnas' };
+                showToast('Login Super Admin Berhasil!');
+            } else {
+                const jrn = journalists.find(j => j.email === email);
+                if(jrn) {
+                    currentUser = { name: jrn.name, email: jrn.email, role: 'journalist', pangkalan: jrn.pangkalan };
+                    showToast(`Selamat datang, ${jrn.name}!`);
+                } else {
+                    currentUser = { name: email.split('@')[0], email: email, role: 'journalist', pangkalan: 'Kwarcab Pramuka' };
+                    showToast('Login Jurnalis Berhasil!');
+                }
+            }
+
+            saveData();
+            renderTopNav();
+            closeModal('modal-login');
+            if(currentUser.role === 'admin') showSection('admin');
+            else showSection('jurnalis');
+        }
+
+        // REGISTER JOURNALIST HANDLER
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const pangkalan = document.getElementById('reg-pangkalan').value;
+            const email = document.getElementById('reg-email').value;
+
+            journalists.push({ name, pangkalan, email, status: 'Aktif' });
+            currentUser = { name, email, role: 'journalist', pangkalan };
+            
+            saveData();
+            renderTopNav();
+            closeModal('modal-register');
+            showToast('Pendaftaran Berhasil! Anda resmi terdaftar sebagai Jurnalis.');
+            showSection('jurnalis');
+        }
+
+        // LOGOUT
+        function handleLogout() {
+            currentUser = null;
+            saveData();
+            renderTopNav();
+            showSection('home');
+            showToast('Anda telah keluar.');
+        }
+
+        // MODAL HELPERS
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+        function openRegisterModal() {
+            openModal('modal-register');
+        }
+
+        // TOAST NOTIFICATION
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = type === 'error' ? 'fas fa-exclamation-circle text-red-400 text-xl' : 'fas fa-check-circle text-pramuka-kuning text-xl';
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
